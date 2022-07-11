@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { authPage } from "../../middlewares/authorizationPage";
 import Router from "next/router";
+import Nav from "../../components/nav";
 
 export async function getServerSideProps(ctx) {
   // token destructure dari ctx
@@ -49,6 +50,7 @@ export default function PostCreate(props) {
   return (
     <div>
       <h1>Create Post</h1>
+      <Nav />
       <form onSubmit={createHandler}>
         <input
           onChange={fieldHandler}

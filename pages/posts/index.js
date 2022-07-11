@@ -1,6 +1,7 @@
 import { authPage } from "../../middlewares/authorizationPage";
 import { useState } from "react";
 import Router from "next/router";
+import Nav from "../../components/nav";
 
 export async function getServerSideProps(ctx) {
   // token destructure dari ctx
@@ -60,6 +61,7 @@ export default function PostIndex(props) {
   return (
     <div>
       <h1>Posts</h1>
+      <Nav />
       {postsState.map((post) => {
         return (
           <div key={post.id}>

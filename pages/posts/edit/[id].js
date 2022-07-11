@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { authPage } from "../../../middlewares/authorizationPage";
 import Router from "next/router";
+import Nav from "../../../components/nav";
 
 export async function getServerSideProps(ctx) {
   // token destructure dari ctx
@@ -26,7 +27,10 @@ export async function getServerSideProps(ctx) {
 }
 
 export default function PostEdit(props) {
-  const [fields, setFields] = useState({ title: "", content: "" });
+  const [fields, setFields] = useState({
+    title: props.post.title,
+    content: props.post.content,
+  });
   const [status, setStatus] = useState("normal");
 
   async function updateHandler(e) {
@@ -34,9 +38,10 @@ export default function PostEdit(props) {
 
     setStatus("loading...");
 
+    const { post } = props;
     const { token } = props;
 
-    const update = await fetch("/api/posts/update", {
+    const update = await fetch("/api/posts/update/" + post.id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -66,6 +71,7 @@ export default function PostEdit(props) {
   return (
     <div>
       <h1>Edit Post</h1>
+      <Nav />
       <form onSubmit={updateHandler}>
         <input
           onChange={fieldHandler}
@@ -82,7 +88,7 @@ export default function PostEdit(props) {
           defaultValue={props.post.content}
         ></textarea>
         <br />
-        <button type="submit">Post</button>
+        <button type="submit">update</button>
         <br />
         <div>{status}</div>
       </form>
