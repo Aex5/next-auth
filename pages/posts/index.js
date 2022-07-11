@@ -1,5 +1,6 @@
 import { authPage } from "../../middlewares/authorizationPage";
 import { useState } from "react";
+import Router from "next/router";
 
 export async function getServerSideProps(ctx) {
   // token destructure dari ctx
@@ -52,6 +53,10 @@ export default function PostIndex(props) {
     }
   }
 
+  function editHandler(id) {
+    Router.push("/posts/edit/" + id);
+  }
+
   return (
     <div>
       <h1>Posts</h1>
@@ -60,7 +65,7 @@ export default function PostIndex(props) {
           <div key={post.id}>
             <h3>{post.title}</h3>
             <p>{post.content}</p>
-            <button>Edit</button>
+            <button onClick={editHandler.bind(this, post.id)}>Edit</button>
             <button onClick={deleteHandler.bind(this, post.id)}>Delete</button>
             <hr />
           </div>
