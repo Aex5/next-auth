@@ -13,10 +13,14 @@ export default function authorization(req, res) {
     if (authType !== "Bearer") return res.status(401).end();
 
     // melakukan decode dengan secret key yang sudah dibuat di halaman register
-    return jwt.verify(authToken, "secret", function (err, decode) {
-      if (err) return res.status(401).end();
+    return jwt.verify(
+      authToken,
+      process.env.JWT_SECRET,
+      function (err, decode) {
+        if (err) return res.status(401).end();
 
-      return resolve(decode);
-    });
+        return resolve(decode);
+      }
+    );
   });
 }
